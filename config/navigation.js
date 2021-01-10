@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import InputBoards from '../pages/InputBoards';
+import ListBoards from '../pages/ListBoards';
 
 const NavStack = createStackNavigator();
 const NavStackScreen = () => (
@@ -10,12 +11,17 @@ const NavStackScreen = () => (
     screenOptions={{
       headerShown: true,
     }}
-    initialRouteName="InputBoards">
+    initialRouteName="ListBoards">
     {/* <NavStack.Screen name="ListBoards" component={ListBoards} options={{ title: 'Overview' }}/> */}
     <NavStack.Screen
       name="InputBoards"
       component={InputBoards}
       options={{ title: 'Add New Board' }}
+    />
+    <NavStack.Screen
+      name="ListBoards"
+      component={ListBoards}
+      options={{ title: 'Boards List' }}
     />
   </NavStack.Navigator>
 );

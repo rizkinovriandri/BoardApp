@@ -3,8 +3,13 @@ import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Input} from 'react-native-elements';
 
+import firestore from '@react-native-firebase/firestore';
 
 const InputBoards = () => {
+
+  const inputTitle = React.createRef();
+  const inputDesc = React.createRef();
+  const inputAuthor = React.createRef();
 
   const [boardTitle, setBoardTitle] = useState();
   const [boardDesc, setBoardDesc] = useState();
@@ -24,7 +29,27 @@ const InputBoards = () => {
 
   const handleAddProduct = () => {
     
-      console.log(`judulnya adalah ${boardTitle} | Description : ${boardDesc} | Author : ${boardAuthor}`);    
+    firestore()
+    .collection('boards')
+    .add({
+      title: boardTitle,
+      description: boardDesc,
+      author: boardAuthor,
+    })
+    .then(function (docRef) {
+      console.log('Document written with ID: ', docRef.id);
+      inputTitle.current.clear();
+      inputDesc.current.clear();
+      inputAuthor.current.clear();
+      alert('Board successfully added');
+      // navigation.navigate('ViewProducts');
+    })
+    .catch(function (error) {
+      console.error('Error adding document: ', error);
+      alert(error);
+    });
+
+      // console.log(`judulnya adalah ${boardTitle} | Description : ${boardDesc} | Author : ${boardAuthor}`);    
   };
 
     return (
@@ -33,6 +58,7 @@ const InputBoards = () => {
       <Text style={styles.createTitle}>Create New Board</Text>
       <Input
         placeholder="Title"
+        ref={inputTitle}
         onChangeText={(boardTitle) => onChangeBoardTitle(boardTitle)}
         rightIcon={
           <Icon
@@ -45,6 +71,7 @@ const InputBoards = () => {
       />
       <Input
         placeholder="Description"
+        ref={inputDesc}
         onChangeText={(boardDesc) => onChangeBoardDesc(boardDesc)}
         rightIcon={
           <Icon
@@ -57,6 +84,7 @@ const InputBoards = () => {
       />
       <Input
         placeholder="Author"
+        ref={inputAuthor}
         onChangeText={(boardAuthor) => onChangeBoardAuthor(boardAuthor)}
         rightIcon={
           <Icon
