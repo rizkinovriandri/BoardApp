@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Input} from 'react-native-elements';
@@ -6,8 +6,25 @@ import {Input} from 'react-native-elements';
 
 const InputBoards = () => {
 
+  const [boardTitle, setBoardTitle] = useState();
+  const [boardDesc, setBoardDesc] = useState();
+  const [boardAuthor, setBoardAuthor] = useState();
+
+  const onChangeBoardTitle = (boardTitle) => {
+    setBoardTitle(boardTitle);
+  };
+
+  const onChangeBoardDesc = (boardDesc) => {
+    setBoardDesc(boardDesc);
+  };
+
+  const onChangeBoardAuthor = (boardAuthor) => {
+    setBoardAuthor(boardAuthor);
+  };
+
   const handleAddProduct = () => {
-      console.log("Add Product");    
+    
+      console.log(`judulnya adalah ${boardTitle} | Description : ${boardDesc} | Author : ${boardAuthor}`);    
   };
 
     return (
@@ -16,6 +33,7 @@ const InputBoards = () => {
       <Text style={styles.createTitle}>Create New Board</Text>
       <Input
         placeholder="Title"
+        onChangeText={(boardTitle) => onChangeBoardTitle(boardTitle)}
         rightIcon={
           <Icon
             name='adn'
@@ -23,10 +41,11 @@ const InputBoards = () => {
             color='black'
           />
         }
-        // onChangeText={(email) => onChangeEmail(email)}
+        
       />
       <Input
         placeholder="Description"
+        onChangeText={(boardDesc) => onChangeBoardDesc(boardDesc)}
         rightIcon={
           <Icon
             name='book'
@@ -38,6 +57,7 @@ const InputBoards = () => {
       />
       <Input
         placeholder="Author"
+        onChangeText={(boardAuthor) => onChangeBoardAuthor(boardAuthor)}
         rightIcon={
           <Icon
             name='user-circle'
